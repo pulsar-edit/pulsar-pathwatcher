@@ -1,0 +1,14 @@
+{
+  "name": "pulsar-pathwatcher",
+  "version": "0.0.1",
+  "description": "A pathwatcher-compatible library that delegates to Atom/Pulsar's global object",
+  "main": "./src/index.js",
+  "dependencies": {
+    "async": "~0.2.10",
+    "event-kit": "^2.1.0",
+    "fs-plus": "^3.0.0",
+    "grim": "^2.0.1",
+    "iconv-lite": "~0.4.4",
+    "nsfw": "^2.2.3"
+  }
+}
