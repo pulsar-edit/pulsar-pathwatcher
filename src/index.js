@@ -1,5 +1,4 @@
 const nsfw = require('nsfw');
-const EVENT_TYPES = new Set([nsfw.actions.CREATED, nsfw.actions.MODIFIED, nsfw.actions.RENAMED]);
 
 const evtMappings = new Map([
   [nsfw.actions.CREATED, 'create'],
