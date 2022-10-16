@@ -265,7 +265,7 @@ module.exports = class File {
   // Public: Return the {Directory} that contains this file.
   getParent() {
     if (Directory == null) {
-      Directory = ;
+      Directory = require('./directory');
     }
     return new Directory(path.dirname(this.path));
   }
