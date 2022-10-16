@@ -21,10 +21,6 @@ module.exports = class Directory {
     this.emitter = new Emitter();
     this.subscriptionCount = 0;
     this.realPath = null;
-    if (includeDeprecatedAPIs) {
-      this.on('contents-changed-subscription-will-be-added', () => this.willAddSubscription());
-      this.on('contents-changed-subscription-removed', () => this.didRemoveSubscription());
-    }
     if (directoryPath) {
       directoryPath = path.normalize(directoryPath);
       // Remove a trailing slash

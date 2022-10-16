@@ -18,7 +18,7 @@ module.exports = class File {
 
   // * `filePath` A {String} containing the absolute path to the file
   // * `symlink` (optional) A {Boolean} indicating if the path is a symlink (default: false).
-  constructor(filePath, symlink = false, includeDeprecatedAPIs = Grim.includeDeprecatedAPIs) {
+  constructor(filePath, symlink = false) {
     this.encoding = 'utf8';
     this.realPath = null;
     this.subscriptionCount = 0;
@@ -29,14 +29,6 @@ module.exports = class File {
     }
     this.path = filePath;
     this.emitter = new Emitter();
-    if (includeDeprecatedAPIs) {
-      this.on('contents-changed-subscription-will-be-added', () => this.willAddSubscription());
-      this.on('moved-subscription-will-be-added', () => this.willAddSubscription());
-      this.on('removed-subscription-will-be-added', () => this.willAddSubscription());
-      this.on('contents-changed-subscription-removed', () => this.didRemoveSubscription());
-      this.on('moved-subscription-removed', () => this.didRemoveSubscription());
-      this.on('removed-subscription-removed', () => this.didRemoveSubscription());
-    }
     this.cachedContents = null;
     this.reportOnDeprecations = true;
   }
