@@ -1,27 +1,29 @@
-const nsfw = require('nsfw');
-
-const evtMappings = new Map([
-  [nsfw.actions.CREATED, 'create'],
-  [nsfw.actions.MODIFIED, 'change'],
-  [nsfw.actions.RENAMED, 'rename'],
-  [nsfw.actions.DELETED, 'delete']
-]);
+// So... we will use the global `atom` export inside Pulsar to watch directories
+// and paths. There's only one problem: Atom's "export" handler actually depends on...
+// ....
+// You guessed right: Pathwatcher. But it actually DON'T USE the "watcher" part of
+// pathwatcher, just Directory and File. So... we delay the require, hopefully
+// so that we don't blow up the whole thing.
+let atomExported = null // This is SO WEIRD...
 
 function watch(fileOrDir, callback) {
-  const watcher = nsfw(fileOrDir, events => {
+  if(atomExported === null) atomExported = require('atom')
+  const watcher = atomExported.watchPath(fileOrDir, {}, events => {
     events.forEach(event => {
-      const eventName = evtMappings.get(event.action);
-      callback(eventName, event.file || event.newFile)
+      let eventName;
+      if(event.action === 'created') eventName = 'rename'
+      else if(event.action === 'deleted') eventName = 'delete'
+      else eventName = 'change'
+      callback(eventName, event.path)
     })
   })
-  watcher.then(w => w.start());
   return {
     close: () => {
-      watcher.then(w => w.close())
+      watcher.then(w => w.dispose())
     }
   }
 }
 
 module.exports.watch = watch
-module.exports.watch = watch
-module.exports.watch = watch
+module.exports.File = require('./file');
+module.exports.Directory = require('./directory');

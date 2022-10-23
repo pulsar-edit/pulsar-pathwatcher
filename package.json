@@ -8,7 +8,6 @@
     "event-kit": "^2.1.0",
     "fs-plus": "^3.0.0",
     "grim": "^2.0.1",
-    "iconv-lite": "~0.4.4",
-    "nsfw": "^2.2.3"
+    "iconv-lite": "~0.4.4"
   }
 }
