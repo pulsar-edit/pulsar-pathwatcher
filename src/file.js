@@ -6,7 +6,7 @@ const fs = require('fs-plus');
 const Grim = require('grim');
 const iconv = null; // Defer until used
 const Directory = require('./directory');
-const PathWatcher = require('./index');
+const watch = require('./watch');
 
 // Extended: Represents an individual file that can be watched, read from, and
 // written to.
@@ -476,7 +476,7 @@ module.exports = class File {
   }
 
   subscribeToNativeChangeEvents() {
-    return this.watchSubscription != null ? this.watchSubscription : this.watchSubscription = PathWatcher.watch(this.path, (...args) => {
+    return this.watchSubscription != null ? this.watchSubscription : this.watchSubscription = watch(this.path, (...args) => {
       return this.handleNativeChangeEvent(...args);
     });
   }

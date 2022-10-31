@@ -4,7 +4,7 @@ const {Emitter, Disposable} = require('event-kit');
 const fs = require('fs-plus');
 const Grim = require('grim');
 const File = require('./file');
-const PathWatcher = require('./index');
+const watch = require('./watch');
 
 // Extended: Represents a directory on disk that can be watched for changes.
 module.exports = class Directory {
@@ -370,7 +370,7 @@ module.exports = class Directory {
   Section: Private
   */
   subscribeToNativeChangeEvents() {
-    return this.watchSubscription != null ? this.watchSubscription : this.watchSubscription = PathWatcher.watch(this.path, (eventType) => {
+    return this.watchSubscription != null ? this.watchSubscription : this.watchSubscription = watch(this.path, (eventType) => {
       if (eventType === 'change') {
         if (Grim.includeDeprecatedAPIs) {
           this.emit('contents-changed');

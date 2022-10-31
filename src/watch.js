@@ -6,7 +6,7 @@
 // so that we don't blow up the whole thing.
 let atomExported = null // This is SO WEIRD...
 
-function watch(fileOrDir, callback) {
+module.exports = function watch(fileOrDir, callback) {
   if(atomExported === null) atomExported = require('atom')
   const watcher = atomExported.watchPath(fileOrDir, {}, events => {
     events.forEach(event => {
@@ -23,5 +23,3 @@ function watch(fileOrDir, callback) {
     }
   }
 }
-
-module.exports.watch = watch
